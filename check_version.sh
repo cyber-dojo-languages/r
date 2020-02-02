@@ -1,8 +1,7 @@
-#!/bin/bash
-set -e
+#!/bin/bash -Eeu
 
 readonly MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-readonly EXPECTED=$(cat ${MY_DIR}/README.md | grep Version | cut -d'=' -f2 | cut -d']' -f1)
+readonly EXPECTED=3.4.4
 readonly ACTUAL=$(docker run --rm -it cyberdojofoundation/rbase sh -c 'Rscript --version 2>&1')
 
 if echo "${ACTUAL}" | grep -q "${EXPECTED}"; then
@@ -10,5 +9,5 @@ if echo "${ACTUAL}" | grep -q "${EXPECTED}"; then
 else
   echo "VERSION EXPECTED: ${EXPECTED}"
   echo "VERSION   ACTUAL: ${ACTUAL}"
-  exit 1
+  exit 42
 fi
